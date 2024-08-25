@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: yuyu-seckill
+  thymeleaf:
+    cache: false #thymeleaf缓存关闭，因为不需要
+  datasource: # 数据源配置
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    hikari: #springboot自带的数据库连接池（号称是最快的连接池）
+      pool-name: DateHikariCP #自己起的连接池的名字
+      minimum-idle: 5  #最小的空闲连接数
+      idle-timeout:  1800000 #空闲连接存活的时间（默认600000   10分钟）
+      maximum-pool-size: 10 #最大连接数  默认为10
+      auto-commit: true #自动提交  从连接池返回的连接自动提交
+      max-lifetime: 1800000 #连接最大存活时间 ，0表示永久存活，默认1800000（30分钟）
+      connection-timeout: 30000 #连接超时时间 默认30s
+      connection-test-query: SELECT 1 #心跳机制 测试连接是否是可用的 一个查询语句
+
+#mybatis-plus配置
+mybatis-plus:
+  mapper-locations: classpath*:com/example/mapper/*Mapper.xml #配置××××Mapper.xml映射文件的位置
+  type-aliases-package: com.example.pojo #返回的别名  配置Mybatis数据返回类型别名（默认是全类名）
+
+#Mybatis SQL 日志打印（方法接口所在的包，不是Mapper.xml所在的包）
+logging:
+  level:
+    com.example.seckill.mapper: debug
+
